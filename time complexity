@@ -1,0 +1,536 @@
+Intro to time complexity--
+Algorithm analysis is an important part of commputational complexity theory which provides theoritical estimation for the required resources of an algorithm to solve a specific computational problem.
+
+Why Analysis of Algorithms is important?
+
+--predict behaviour of algorithm for large inputs used in scalable soft.
+--by analyzing different algorithms, we can compare them to determine the best one for our purpose.
+
+ORDER OF GROWTH--
+Example 1:  f(n) = 1000,  g(n) = n + 1
+For n > 999, g(n) would always be greater than f(n) because order of growth of g(n) is more than f(n).
+
+Example 2: f(n) = 4n2 ,  g(n) = 2n + 2000
+f(n) has higher order of growth as it grows quadratically in terms of input size.
+
+How do we Quickly find order of Growth?
+
+Example 1 : 4n2 + 3n + 100
+After ignoring lower order terms, we get
+4n2
+After ignoring constants, we get
+n2
+Hence order of growth is n2
+
+Example 1 : 100 n Log n + 3n + 100 Log n  + 2
+After ignoring lower order terms, we get
+100 n  Log n
+After ignoring constants, we get
+n Log n
+Hence order of growth is n Log n
+
+How do we compare two order of growths?
+c < Log Log n < Log n  < n1/3 < n1/2  < n < n Log n < n2 < n2 Log n < n3  < n4 < 2n  < nn 
+
+Here c is a constant.
+
+Asymptotic Analysis--
+In Asymptotic Analysis, we evaluate the performance of an algorithm in terms of input size (we don’t measure the actual running time). We calculate, order of growth of time taken (or space) by an algorithm in terms of input size. For example linear search grows linearly and Binary Search grows logarithmically in terms of input size.
+
+Case Analysis--
+
+1. Worst Case Analysis (Mostly used) 
+
+In the worst-case analysis, we calculate the upper bound on the running time of an algorithm. We must know the case that causes a maximum number of operations to be executed.
+For Linear Search, the worst case happens when the element to be searched (x) is not present in the array. When x is not present, the search() function compares it with all the elements of arr[] one by one.
+
+2. Best Case Analysis (Very Rarely used) 
+
+In the best-case analysis, we calculate the lower bound on the running time of an algorithm. We must know the case that causes a minimum number of operations to be executed.
+For linear search, the best case occurs when x is present at the first location. The number of operations in the best case is constant (not dependent on n). So the order of growth of time taken in terms of input size is constant.
+
+3. Average Case Analysis (Rarely used) 
+
+
+In average case analysis, we take all possible inputs and calculate the computing time for all of the inputs. Sum all the calculated values and divide the sum by the total number of inputs.
+We must know (or predict) the distribution of cases. For the linear search problem, let us assume that all cases are uniformly distributed (including the case of x not being present in the array). So we sum all the cases and divide the sum by (n+1). We take (n+1) to consider the case when the element is not present.
+
+Examples with their complexity analysis:
+
+1. Linear search algorithm:
+
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// Linearly search target in arr.
+// If target is present, return the index;
+// otherwise, return -1
+int search(vector<int>& arr, int x) {
+    for (int i = 0; i < arr.size(); i++) {
+        if (arr[i] == x)
+            return i;
+    }
+    return -1;
+}
+
+int main() {
+    vector<int> arr = {1, 10, 30, 15};
+    int x = 30;
+    cout << search(arr, x);
+    return 0;
+}
+
+
+Best Case: Constant Time irrespective of input size. This will take place if the element to be searched is on the first index of the given list. So, the number of comparisons, in this case, is 1.
+Average Case: Linear Time, This will take place if the element to be searched is at the middle index (in an average search) of the given list.
+Worst Case: The element to be searched is not present in the list.
+
+
+2. Special Array Sum : In this example, we will take an array of length (n) and deals with the following cases :
+
+If (n) is even then our output will be 0
+If (n) is odd then our output will be the sum of the elements of the array.
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int getSum(const vector<int>& arr1) {
+    int n = arr1.size();
+    if (n % 2 == 0) // (n) is even
+        return 0;
+    
+    int sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += arr1[i];
+    }
+    return sum; // (n) is odd
+}
+
+int main() {
+  
+    // Declaring two vectors, one with an odd length
+    // and the other with an even length
+    vector<int> arr1 = {1, 2, 3, 4};
+    vector<int> arr2 = {1, 2, 3, 4, 5};
+    cout << getSum(arr1) << endl; 
+    cout << getSum(arr2) << endl;
+    return 0;
+}
+
+Time Complexity Analysis:
+
+Best Case: The order of growth will be constant because in the best case we are assuming that (n) is even.
+Average Case: In this case, we will assume that even and odd are equally likely, therefore Order of growth will be linear
+Worst Case: The order of growth will be linear because in this case, we are assuming that (n) is always odd.
+
+
+What is Big-O Notation?
+Big-O notation is used to describe the performance or complexity of an algorithm. Specifically, it describes the worst-case scenario in terms of time or space complexity.
+
+Big O notation only describes the asymptotic behavior of a function, not its exact value.
+The Big O notation can be used to compare the efficiency of different algorithms or data structures.
+
+
+Definition of Big-O Notation--
+Big O notation is a mathematical notation used to describe the worst-case time complexity or efficiency of an algorithm or the worst-case space complexity of a data structure.
+
+Properties of Big O Notation:--
+
+1. Reflexivity
+Rule: For any function f(n), f(n)=O(f(n)).
+Meaning: A function is always in its own Big-O class.
+Example-- If f(n)=n^2=O(n^2).
+This is true because n^2 grows exactly at the rate n^2.
+
+2. Transitivity
+Rule: If f(n)=O(g(n)) and g(n)=O(h(n)), then f(n)=O(h(n)).
+Meaning: If one function grows slower than a second function, and that second function grows slower than a third function, then the first function grows slower than the third.
+
+Rest in https://chatgpt.com/share/6759fd4a-31cc-8004-8301-dedd6e79f046
+
+
+1. Linear Time Complexity: Big O(n) Complexity
+Linear time complexity means that the running time of an algorithm grows linearly with the size of the input.
+
+For example, consider an algorithm that traverses through an array to find a specific element:
+
+
+bool findElement(int arr[], int n, int key)
+{
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == key) {
+            return true;
+        }
+    }
+    return false;
+}
+
+2. Logarithmic Time Complexity: Big O(log n) Complexity
+Logarithmic time complexity means that the running time of an algorithm is proportional to the logarithm of the input size.
+
+For example, a binary search algorithm has a logarithmic time complexity:
+
+int binarySearch(int arr[], int l, int r, int x)
+{
+    if (r >= l) {
+        int mid = l + (r - l) / 2;
+        if (arr[mid] == x)
+            return mid;
+        if (arr[mid] > x)
+            return binarySearch(arr, l, mid - 1, x);
+        return binarySearch(arr, mid + 1, r, x);
+    }
+    return -1;
+}
+
+
+3. Quadratic Time Complexity: Big O(n2) Complexity
+Quadratic time complexity means that the running time of an algorithm is proportional to the square of the input size.
+
+For example, a simple bubble sort algorithm has a quadratic time complexity:
+
+void bubbleSort(int arr[], int n)
+{
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                swap(&arr[j], &arr[j + 1]);
+            }
+        }
+    }
+}
+
+4. Cubic Time Complexity: Big O(n3) Complexity
+
+Cubic time complexity means that the running time of an algorithm is proportional to the cube of the input size.
+
+For example, a naive matrix multiplication algorithm has a cubic time complexity:
+
+void multiply(int mat1[][N], int mat2[][N], int res[][N])
+{
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < N; j++) {
+            res[i][j] = 0;
+            for (int k = 0; k < N; k++)
+                res[i][j] += mat1[i][k] * mat2[k][j];
+        }
+    }
+}
+
+5. Polynomial Time Complexity: Big O(nk) Complexity
+Polynomial time complexity refers to the time complexity of an algorithm that can be expressed as a polynomial function of the input size n. In Big O notation, an algorithm is said to have polynomial time complexity if its time complexity is O(nk), where k is a constant and represents the degree of the polynomial.
+
+Algorithms with polynomial time complexity are generally considered efficient, as the running time grows at a reasonable rate as the input size increases. Common examples of algorithms with polynomial time complexity include linear time complexity O(n), quadratic time complexity O(n2), and cubic time complexity O(n3).
+
+6. Exponential Time Complexity: Big O(2n) Complexity
+Exponential time complexity means that the running time of an algorithm doubles with each addition to the input data set.
+
+For example, the problem of generating all subsets of a set is of exponential time complexity:
+
+void generateSubsets(int arr[], int n)
+{
+    for (int i = 0; i < (1 << n); i++) {
+        for (int j = 0; j < n; j++) {
+            if (i & (1 << j)) {
+                cout << arr[j] << " ";
+            }
+        }
+        cout << endl;
+    }
+}
+
+
+Θ (Theta) Notation--
+
+Definition: Let g and f be the function from the set of natural numbers to itself. The function f is said to be Θ(g), if there are constants c1, c2 > 0 and a natural number n0 such that c1* g(n) ≤ f(n) ≤ c2 * g(n) for all n ≥ n0.
+
+The above definition means, if f(n) is theta of g(n), then the value f(n) is always between c1 * g(n) and c2 * g(n) for large values of n (n ≥ n0). The definition of theta also requires that f(n) must be non-negative for values of n greater than n0. 
+
+In simple language, Big – Theta(Θ) notation specifies asymptotic bounds (both upper and lower) for a function f(n) and provides the average time complexity of an algorithm. 
+
+Example: Consider an example to find whether a key exists in an array or not using linear search. The idea is to traverse the array and check every element if it is equal to the key or not.
+The pseudo-code is as follows:
+
+bool linearSearch(int a[], int n, int key)
+{
+    for (int i = 0; i < n; i++) {
+        if (a[i] == key)
+            return true;
+    }
+    return false;
+}
+
+Real Code--
+
+// C++ program for the above approach
+#include <bits/stdc++.h>
+using namespace std;
+
+// Function to find whether a key exists in an 
+// array or not using linear search
+bool linearSearch(int a[], int n, int key)
+{
+    // Traverse the given array, a[]
+    for (int i = 0; i < n; i++) {
+
+        // Check if a[i] is equal to key
+        if (a[i] == key)
+            return true;
+    }
+
+    return false;
+}
+
+// Driver Code
+int main()
+{
+    // Given Input
+    int arr[] = { 2, 3, 4, 10, 40 };
+    int x = 10;
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    // Function Call
+  
+    if (linearSearch(arr, n, x))
+        cout << "Element is present in array";
+    else
+        cout << "Element is not present in array";
+
+    return 0;
+}
+
+Time Complexity: O(n)
+Auxiliary Space: O(1)
+
+What is Big-Omega Ω Notation?
+Big-Omega Ω Notation, is a way to express the asymptotic lower bound of an algorithm’s time complexity, since it analyses the best-case situation of algorithm. It provides a lower limit on the time taken by an algorithm in terms of the size of the input. It’s denoted as Ω(f(n)), where f(n) is a function that represents the number of operations (steps) that an algorithm performs to solve a problem of size n.
+
+Example of Big-Omega Ω Notation:
+Consider an example to print all the possible pairs of an array. The idea is to run two nested loops to generate all the possible pairs of the given array:
+
+// C++ program for the above approach
+#include <bits/stdc++.h>
+using namespace std;
+
+// Function to print all possible pairs
+int print(int a[], int n)
+{
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (i != j)
+                cout << a[i] << " " << a[j] << "\n";
+        }
+    }
+}
+
+// Driver Code
+int main()
+{
+
+    // Given array
+    int a[] = { 1, 2, 3 };
+
+    // Store the size of the array
+    int n = sizeof(a) / sizeof(a[0]);
+
+    // Function Call
+    print(a, n);
+
+    return 0;
+}
+
+In this example, it is evident that the print statement gets executed n2 times. Now linear functions g(n), logarithmic functions g(log n), constant functions g(1) will always grow at a lesser rate than n2 when the input range tends to infinity therefore, the best-case running time of this program can be Ω(log n), Ω(n), Ω(1), or any function g(n) which is less than n2 when n tends to infinity.
+
+Difference between Big O vs Big Theta Θ vs Big Omega Ω Notations--
+https://www.geeksforgeeks.org/difference-between-big-oh-big-omega-and-big-theta/
+
+Difference between big O notations and tilde--
+
+1. Big Oh notation (O)--
+This notation is basically used to describe the asymptotic upper bound. Mathematically, we can describe it as :
+
+f(n) = O(g(n)) 
+if there exist positive constants c and 
+n0 such that 
+0 <= f(n) <= c*g(n) 
+for all n >= n0
+The above notation depicts that at the point n=n0, the growth of the function g(n) increases gradually. In algorithms we always deal with larger values of n i.e. n→∞.
+
+Therefore, f(n) = O(g(n)) if the above limit value lies in the range [ 0 , ∞ )
+
+Example – n^2=O(n^3)
+
+
+2. Tilde Notation (~) -
+Tilde notation is used when we want to make a simple approximation of a complex function. It simply drops the lower order terms. It is denoted by ~g(n).
+If f(n)~g(n) indicates that the value of f(n)/g(n) tends towards 1 for a larger value of n.
+
+Time Complexity Analysis:
+
+1. **Outer Loop**:
+
+   for (int i = N / 2; i <= N; i++) {
+Starts from i = N/2 and runs until i = N, incrementing by 1.
+Total iterations = (N - N/2 + 1) = N/2 + 1 ≈ O(N) (for large N, the "+1" is negligible).
+Inner Loop:
+
+for (int j = 2; j <= N; j = j * 2) {
+Starts from j = 2 and multiplies j by 2 in each iteration until j <= N.
+Number of iterations is approximately log2(N), as j takes the values 2, 4, 8, ..., N.
+
+Body of the Loops:
+
+cpp
+Copy code
+k = k + N / 2;
+This is a simple arithmetic operation performed once for each iteration of the inner loop.
+
+Total Time Complexity:
+
+The Outer Loop runs O(N) times.
+The Inner Loop runs O(log N) times for each iteration of the outer loop.
+Total number of operations = O(N) * O(log N) = O(N log N)
+Tilde Notation:
+
+Tilde notation (~O) ignores logarithmic factors and focuses on the dominant term.
+For this program:
+Big-O complexity: O(N log N)
+Tilde notation: ~O(N)
+
+
+How to Analyse Loops for Complexity Analysis of Algorithms--
+
+Constant Time Complexity O(1):
+The time complexity of a function (or set of statements) is considered as O(1) if it doesn’t contain a loop, recursion, and call to any other non-constant time function. 
+ i.e. set of non-recursive and non-loop statements
+
+In computer science, O(1) refers to constant time complexity, which means that the running time of an algorithm remains constant and does not depend on the size of the input. This means that the execution time of an O(1) algorithm will always take the same amount of time regardless of the input size. An example of an O(1) algorithm is accessing an element in an array using an index.
+
+Example: 
+
+swap() function has O(1) time complexity. 
+A loop or recursion that runs a constant number of times is also considered O(1). For example, the following loop is O(1).
+
+// Here c is a positive constant
+for (int i = 1; i <= c; i++) {
+	// some O(1) expressions
+}
+
+
+Linear Time Complexity O(n):
+The Time Complexity of a loop is considered as O(n) if the loop variables are incremented/decremented by a constant amount. For example following functions have O(n) time complexity. Linear time complexity, denoted as O(n), is a measure of the growth of the running time of an algorithm proportional to the size of the input. In an O(n) algorithm, the running time increases linearly with the size of the input. For example, searching for an element in an unsorted array or iterating through an array and performing a constant amount of work for each element would be O(n) operations. In simple words, for an input of size n, the algorithm takes n steps to complete the operation.
+
+// Here c is a positive integer constant
+for (int i = 1; i <= n; i = i + c) {
+    // some O(1) expressions
+}
+ 
+for (int i = n; i > 0; i = i - c) {
+    // some O(1) expressions
+}
+
+
+Quadratic Time Complexity O(nc):
+The time complexity is defined as an algorithm whose performance is directly proportional to the squared size of the input data, as in nested loops it is equal to the number of times the innermost statement is executed. For example, the following sample loops have O(n2) time complexity 
+
+Quadratic time complexity, denoted as O(n^2), refers to an algorithm whose running time increases proportional to the square of the size of the input. In other words, for an input of size n, the algorithm takes n * n steps to complete the operation. An example of an O(n^2) algorithm is a nested loop that iterates over the entire input for each element, performing a constant amount of work for each iteration. This results in a total of n * n iterations, making the running time quadratic in the size of the input.
+
+
+// Here c is any positive constant
+for (int i = 1; i <= n; i += c) {
+    for (int j = 1; j <= n; j += c) {
+        // some O(1) expressions
+    }
+}
+ 
+for (int i = n; i > 0; i -= c) {
+    for (int j = i + 1; j <= n; j += c) {
+        // some O(1) expressions
+    }
+}
+ 
+for (int i = n; i > 0; i -= c) {
+    for (int j = i - 1; j > 0; j -= c) {
+        // some O(1) expressions
+    }
+}
+
+Example:  Selection sort and Insertion Sort have O(n2) time complexity. 
+
+Logarithmic Time Complexity O(Log n)--
+
+The time Complexity of a loop is considered as O(Logn) if the loop variables are divided/multiplied by a constant amount. And also for recursive calls in the recursive function, the Time Complexity is considered as O(Logn).
+
+for (int i = 1; i <= n; i *= c) {
+    // some O(1) expressions
+}
+for (int i = n; i > 0; i /= c) {
+    // some O(1) expressions
+}
+
+
+
+
+// Recursive function
+void recurse(int n)
+{
+    if (n <= 0)
+        return;
+    else {
+        // some O(1) expressions
+    }
+    recurse(n/c);
+  // Here c is positive integer constant greater than 1
+}
+
+Logarithmic Time Complexity O(Log Log n):
+The Time Complexity of a loop is considered as O(LogLogn) if the loop variables are reduced/increased exponentially by a constant amount. 
+
+// Here c is a constant greater than 1
+for (int i = 2; i <= n; i = pow(i, c)) {
+    // some O(1) expressions
+}
+// Here fun() is sqrt or cuberoot or any other constant root
+for (int i = n; i > 1; i = fun(i)) {
+    // some O(1) expressions
+}
+
+How to analyse Complexity of Recurrence Relation--
+
+The analysis of the complexity of a recurrence relation involves finding the asymptotic upper bound on the running time of a recursive algorithm. This is usually done by finding a closed-form expression for the number of operations performed by the algorithm as a function of the input size, and then determining the order of growth of the expression as the input size becomes large.
+
+Amortized Analysis--
+
+Amortized Analysis is used for algorithms where an occasional operation is very slow, but most of the other operations are faster. In Amortized Analysis, we analyze a sequence of operations and guarantee a worst-case average time that is lower than the worst-case time of a particularly expensive operation. 
+The example data structures whose operations are analyzed using Amortized Analysis are Hash Tables, Disjoint Sets, and Splay Trees. 
+
+Amortized analysis is a technique used in computer science to analyze the average-case time complexity of algorithms that perform a sequence of operations, where some operations may be more expensive than others. The idea is to spread the cost of these expensive operations over multiple operations, so that the average cost of each operation is constant or less.
+
+For example, consider the dynamic array data structure that can grow or shrink dynamically as elements are added or removed. The cost of growing the array is proportional to the size of the array, which can be expensive. However, if we amortize the cost of growing the array over several insertions, the average cost of each insertion becomes constant or less.
+
+Amortized analysis provides a useful way to analyze algorithms that perform a sequence of operations where some operations are more expensive than others, as it provides a guaranteed upper bound on the average time complexity of each operation, rather than the worst-case time complexity.
+
+The key idea behind amortized analysis is to spread the cost of an expensive operation over several operations. For example, consider a dynamic array data structure that is resized when it runs out of space. The cost of resizing the array is expensive, but it can be amortized over several insertions into the array, so that the average time complexity of an insertion operation is constant.
+
+Let us consider an example of simple hash table insertions. How do we decide on table size? There is a trade-off between space and time, if we make hash-table size big, search time becomes low, but the space required becomes high.
+
+The solution to this trade-off problem is to use Dynamic Table (or Arrays). The idea is to increase the size of the table whenever it becomes full. Following are the steps to follow when the table becomes full. 
+1) Allocate memory for larger table size, typically twice the old table. 
+2) Copy the contents of the old table to a new table. 
+3) Free the old table. 
+
+If the table has space available, we simply insert a new item in the available space. 
+
+So using Amortized Analysis, we could prove that the Dynamic Table scheme has O(1) insertion time which is a great result used in hashing. Also, the concept of the dynamic table is used in vectors in C++ and ArrayList in Java. 
+
+Following are a few important notes. 
+1) Amortized cost of a sequence of operations can be seen as expenses of a salaried person. The average monthly expense of the person is less than or equal to the salary, but the person can spend more money in a particular month by buying a car or something. In other months, he or she saves money for the expensive month. 
+
+2) The above Amortized Analysis was done for Dynamic Array example is called Aggregate Method. There are two more powerful ways to do Amortized analysis called Accounting Method and Potential Method. We will be discussing the other two methods in separate posts. 
+
+3) The amortized analysis doesn’t involve probability. There is also another different notion of average-case running time where algorithms use randomization to make them faster and the expected running time is faster than the worst-case running time. These algorithms are analyzed using Randomized Analysis. Examples of these algorithms are Randomized Quick Sort, Quick Select and Hashing. We will soon be covering Randomized analysis in a different post. 
+
+
